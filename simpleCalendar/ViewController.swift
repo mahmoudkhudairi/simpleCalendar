@@ -12,6 +12,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var yearLabel: UILabel!
   @IBOutlet weak var monthLabel: UILabel!
   @IBOutlet weak var calendarView: JTAppleCalendarView!
+  let formatter = DateFormatter()
   let dateFormatter : DateFormatter = {
     let formatter = DateFormatter()
     formatter.timeZone = Calendar.current.timeZone
@@ -41,31 +42,19 @@ class ViewController: UIViewController {
   }
   func handleCellCalendar(from visibleDates: DateSegmentInfo) {
     let date = visibleDates.monthDates.first!.date
-    dateFormatter.dateFormat = "yyyy"
-    self.yearLabel.text = dateFormatter.string(from: date)
-    dateFormatter.dateFormat = "MMMM"
-    self.monthLabel.text = dateFormatter.string(from: date)
+    formatter.dateFormat = "yyyy"
+    self.yearLabel.text = formatter.string(from: date)
+    formatter.dateFormat = "MMMM"
+    self.monthLabel.text = formatter.string(from: date)
   }
-  func handleCellTextColor(view:JTAppleCell?, cellState: CellState, isToday : Bool = false){
+  func handleCellTextColor(view:JTAppleCell?, cellState: CellState, isToday : Bool){
     guard let validCell = view as? CustomeCell else {return}
     validCell.selectedView.isHidden = !cellState.isSelected
     
     if isToday {
       validCell.todayView.isHidden = false
       validCell.todayView.backgroundColor = dayColor
-      validCell.todayView.layer.masksToBounds = true
-      validCell.todayView.layer.cornerRadius = 20.0
       return
-    }
-    
-    if cellState.isSelected{
-      validCell.dateLabel.textColor = selectedMonthColor
-    } else {
-      if cellState.dateBelongsTo == .thisMonth{
-        validCell.dateLabel.textColor = monthColor
-      }else{
-        validCell.dateLabel.textColor = outsideMonthColor
-      }
     }
   }
 }
@@ -96,22 +85,23 @@ extension ViewController: JTAppleCalendarViewDelegate{
    
     if dateFormatter.string(from: date) == dateFormatter.string(from: currentDate) {
       //today
+      
       handleCellTextColor(view: cell, cellState: cellState,isToday: true)
     }else {
-      handleCellTextColor(view: cell, cellState: cellState)
+      handleCellTextColor(view: cell, cellState: cellState, isToday: false)
     }
  
     return cell
   }
   
   func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-  handleCellTextColor(view: cell, cellState: cellState)
+  handleCellTextColor(view: cell, cellState: cellState, isToday: false)
     
   
   }
 
   func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-    handleCellTextColor(view: cell, cellState: cellState)
+    handleCellTextColor(view: cell, cellState: cellState, isToday: false)
     
   }
 
