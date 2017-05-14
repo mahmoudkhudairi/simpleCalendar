@@ -56,12 +56,21 @@ class ViewController: UIViewController {
       validCell.todayView.backgroundColor = dayColor
       return
     }
+    if cellState.isSelected{
+      validCell.dateLabel.textColor = selectedMonthColor
+    } else {
+      if cellState.dateBelongsTo == .thisMonth{
+        validCell.dateLabel.textColor = monthColor
+      }else{
+        validCell.dateLabel.textColor = outsideMonthColor
+      }
+    }
   }
 }
 extension ViewController: JTAppleCalendarViewDataSource{
   func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-     let startDate = dateFormatter.date(from: "2017 01 01")
-      let endDate = dateFormatter.date(from: "2021 01 01")
+     let startDate = dateFormatter.date(from: "2010 01 01")
+      let endDate = dateFormatter.date(from: "2025 01 01")
     
     let parameters = ConfigurationParameters(startDate: startDate!,
                                              endDate: endDate!,
