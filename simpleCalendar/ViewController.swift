@@ -9,10 +9,13 @@
 import UIKit
 import JTAppleCalendar
 class ViewController: UIViewController {
+  @IBOutlet weak var toDateLabel: UILabel!
   @IBOutlet weak var yearLabel: UILabel!
   @IBOutlet weak var monthLabel: UILabel!
   @IBOutlet weak var calendarView: JTAppleCalendarView!
+  
   let formatter = DateFormatter()
+  var testCalendar = Calendar.current
   let dateFormatter : DateFormatter = {
     let formatter = DateFormatter()
     formatter.timeZone = Calendar.current.timeZone
@@ -21,6 +24,15 @@ class ViewController: UIViewController {
     formatter.dateFormat = "yyyy-MM-dd"
     return formatter
   }()
+   let displayDateFormatter : DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.locale = Locale.current
+    formatter.dateStyle = DateFormatter.Style.medium
+    formatter.timeStyle = DateFormatter.Style.none
+    return formatter
+  }()
+  var firstDate : Date?
+		
   let currentDate = Date()
   let dayColor = UIColor.red
   let outsideMonthColor = UIColor.lightGray
@@ -35,6 +47,7 @@ class ViewController: UIViewController {
     //setup calendar spacing
     calendarView.minimumLineSpacing = 0
     calendarView.minimumInteritemSpacing = 0
+    calendarView.allowsMultipleSelection = true
     //setup labels
     calendarView.visibleDates { (visibleDates) in
       self.handleCellCalendar(from: visibleDates)
@@ -49,6 +62,7 @@ class ViewController: UIViewController {
   }
   func handleCellTextColor(view:JTAppleCell?, cellState: CellState, isToday : Bool){
     guard let validCell = view as? CustomeCell else {return}
+    
     validCell.selectedView.isHidden = !cellState.isSelected
     
     if isToday {
@@ -66,6 +80,7 @@ class ViewController: UIViewController {
       }
     }
   }
+ 
 }
 extension ViewController: JTAppleCalendarViewDataSource{
   func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
@@ -105,16 +120,67 @@ extension ViewController: JTAppleCalendarViewDelegate{
   
   func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
   handleCellTextColor(view: cell, cellState: cellState, isToday: false)
+
+   
+    if firstDate != nil {
+      
+      if date < firstDate! {
+        calendarView.deselectAllDates()
+        
+        
+        calendarView.selectDates(from: date, to: date,  triggerSelectionDelegate: false, keepSelectionIfMultiSelectionAllowed: true)
+        
+        firstDate = date
+       
+        
+      } else {
+        //2
+          calendarView.deselectAllDates()
+        
+      
+        calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: false, keepSelectionIfMultiSelectionAllowed: true)
+       
+        
+        firstDate = nil
+        
+      }
+    } else {
+      //1
+      calendarView.deselectAllDates()
+      calendarView.selectDates(from: date, to: date,  triggerSelectionDelegate: false, keepSelectionIfMultiSelectionAllowed: true)
+      
+      
+      firstDate = date
+      
+    }
     
-  
+    // Set title with selected dates
+    
+    let selectedDates = calendarView.selectedDates
+    
+    if firstDate == nil {
+      self.toDateLabel.text = "From \(displayDateFormatter.string(from: selectedDates.first!)) - To \(displayDateFormatter.string(from: selectedDates.last!))"
+    } else {
+      self.toDateLabel.text = "\(displayDateFormatter.string(from: selectedDates.first!))"
+    }
   }
+  
+
+
+  
 
   func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+    
+    //firstDate = nil
+    
+     //calendarView.reloadData()
+    //to remove selection
     handleCellTextColor(view: cell, cellState: cellState, isToday: false)
     
   }
 
   func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+    
     handleCellCalendar(from: visibleDates)
     
     

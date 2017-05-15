@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="J0A-Kf-74q">
-                                <rect key="frame" x="0.0" y="68" width="375" height="252"/>
+                                <rect key="frame" x="0.0" y="68" width="375" height="251.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KCx-N0-wDa">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="21"/>
@@ -102,7 +103,7 @@
                                         </constraints>
                                     </stackView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OMd-IZ-39n" customClass="JTAppleCalendarView" customModule="JTAppleCalendar">
-                                        <rect key="frame" x="0.0" y="42" width="375" height="210"/>
+                                        <rect key="frame" x="0.0" y="42" width="375" height="209.5"/>
                                         <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="209.5" id="M2q-y6-jdm"/>
@@ -177,11 +178,38 @@
                                     </collectionView>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="0cx-0I-NBq">
+                                <rect key="frame" x="16" y="387" width="343" height="230"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dates:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhv-fZ-ZgC">
+                                        <rect key="frame" x="0.0" y="0.0" width="41" height="230"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="55" id="bRN-0P-BLe"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jWu-ov-FOs">
+                                        <rect key="frame" x="41" y="0.0" width="302" height="230"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="fNj-Qw-hWn"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="J0A-Kf-74q" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="4" id="2JL-DB-sti"/>
                             <constraint firstItem="J0A-Kf-74q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Q7G-pU-LSP"/>
+                            <constraint firstItem="0cx-0I-NBq" firstAttribute="top" secondItem="J0A-Kf-74q" secondAttribute="bottom" constant="67.5" id="RGJ-WN-nJJ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="0cx-0I-NBq" secondAttribute="bottom" constant="50" id="T1s-Mc-02w"/>
+                            <constraint firstItem="0cx-0I-NBq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="WRT-wF-hAb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0cx-0I-NBq" secondAttribute="trailing" id="aqM-xq-Wps"/>
                             <constraint firstAttribute="trailing" secondItem="J0A-Kf-74q" secondAttribute="trailing" id="bbd-ph-NjT"/>
                         </constraints>
                     </view>
@@ -189,12 +217,13 @@
                     <connections>
                         <outlet property="calendarView" destination="OMd-IZ-39n" id="PWm-IT-5ls"/>
                         <outlet property="monthLabel" destination="QNK-UK-dTn" id="X7v-ux-I8I"/>
+                        <outlet property="toDateLabel" destination="jWu-ov-FOs" id="04P-C5-hOu"/>
                         <outlet property="yearLabel" destination="Bba-U4-Pud" id="LmZ-x2-MH0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1108.125" y="108.80281690140845"/>
+            <point key="canvasLocation" x="1108" y="108.39580209895054"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F3W-ry-P8Y">
