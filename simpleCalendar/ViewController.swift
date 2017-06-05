@@ -121,7 +121,6 @@ extension ViewController: JTAppleCalendarViewDelegate{
   func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
   handleCellTextColor(view: cell, cellState: cellState, isToday: false)
 
-   
     if firstDate != nil {
       
       if date < firstDate! {
@@ -129,18 +128,13 @@ extension ViewController: JTAppleCalendarViewDelegate{
         
         
         calendarView.selectDates(from: date, to: date,  triggerSelectionDelegate: false, keepSelectionIfMultiSelectionAllowed: true)
-        
         firstDate = date
-       
-        
       } else {
         //2
           calendarView.deselectAllDates()
         
       
         calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: false, keepSelectionIfMultiSelectionAllowed: true)
-       
-        
         firstDate = nil
         
       }
@@ -148,8 +142,6 @@ extension ViewController: JTAppleCalendarViewDelegate{
       //1
       calendarView.deselectAllDates()
       calendarView.selectDates(from: date, to: date,  triggerSelectionDelegate: false, keepSelectionIfMultiSelectionAllowed: true)
-      
-      
       firstDate = date
       
     }
@@ -165,16 +157,8 @@ extension ViewController: JTAppleCalendarViewDelegate{
     }
   }
   
-
-
-  
-
   func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-    
-    //firstDate = nil
-    
-     //calendarView.reloadData()
-    //to remove selection
+ 
     handleCellTextColor(view: cell, cellState: cellState, isToday: false)
     
   }
